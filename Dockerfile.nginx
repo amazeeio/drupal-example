@@ -1,0 +1,8 @@
+ARG BUILDER_IMAGE
+FROM ${BUILDER_IMAGE:-builder} as builder
+
+FROM amazeeio/centos7-nginx1-drupal
+
+COPY --from=builder /app /app
+
+ENV WEBROOT=web
