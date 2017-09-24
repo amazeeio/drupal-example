@@ -1,0 +1,5 @@
+name: drupalconvienna
+type: module
+description: DrupalCon Vienna
+core: 8.x
+package: Custom
