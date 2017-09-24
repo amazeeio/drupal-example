@@ -22,7 +22,7 @@
         "drupal/core": "~8.0",
         "drush/drush": "~8.0",
         "drupal/console": "~1.0",
-        "drupal/config_installer": "^1.4"
+        "drupal/config_installer": "1.x-dev"
     },
     "require-dev": {
         "behat/mink": "~1.7",
@@ -72,6 +72,6 @@
                 "sites/development.services.yml",
                 "sites/example.settings.local.php"
             ]
-        }        
+        }
     }
 }
