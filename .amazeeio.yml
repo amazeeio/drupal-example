@@ -12,7 +12,7 @@ tasks:
             cd web
             if [[ $(drush core-status bootstrap --pipe) == "" ]]; then
                 # no drupal installed, we install drupal from scratch
-                drush si config_installer -y --account-name=admin --account-pass=admin install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL
+                drush si config_installer -y --account-name=admin --account-pass=admin install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL || true
             fi
         service: cli
     - run:
