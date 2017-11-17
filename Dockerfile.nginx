@@ -6,3 +6,4 @@ FROM amazeeiolagoon/develop-nginx-drupal
 COPY --from=builder /app /app
 
 ENV WEBROOT=web
+ENV IS_THIS_A_DEMO=yes
