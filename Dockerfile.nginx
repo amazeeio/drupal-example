@@ -1,8 +1,9 @@
 ARG CLI_IMAGE
 FROM ${CLI_IMAGE:-builder} as builder
 
-FROM amazeeio/centos7-nginx1-drupal
+FROM amazeeiolagoon/develop-nginx-drupal
 
 COPY --from=builder /app /app
 
 ENV WEBROOT=web
+ENV IS_THIS_A_DEMO=yes

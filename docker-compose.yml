@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.builder
     image: builder
     labels:
-      com.amazeeio.type: cli
+      lagoon.type: cli
     volumes:
       - ./web:/app/web:delegated
   nginx:
@@ -17,8 +17,8 @@ services:
       context: .
       dockerfile: Dockerfile.nginx
     labels:
-      com.amazeeio.type: nginx-php
-      com.amazeeio.name: nginx-php
+      lagoon.type: nginx-php
+      lagoon.name: nginx-php
     volumes:
       - ./web:/app/web:delegated
     depends_on:
@@ -27,13 +27,15 @@ services:
       - "8080"
     environment:
       - AMAZEEIO_URL=drupal.docker.amazee.io
+      - AMAZEEIO=AMAZEEIO
+      - AMAZEEIO_HTTP_PORT=8080
   php:
     build:
       context: .
       dockerfile: Dockerfile.php
     labels:
-      com.amazeeio.type: nginx-php
-      com.amazeeio.name: nginx-php
+      lagoon.type: nginx-php
+      lagoon.name: nginx-php
     volumes:
       - ./web:/app/web:delegated
     depends_on:
@@ -43,7 +45,7 @@ services:
       context: .
       dockerfile: Dockerfile.mariadb
     labels:
-      com.amazeeio.type: mariadb
+      lagoon.type: mariadb
 networks:
   amazeeio-network:
     external: true
