@@ -1,7 +1,7 @@
 ARG CLI_IMAGE
 FROM ${CLI_IMAGE:-builder} as builder
 
-FROM amazeeiolagoon/develop-nginx-drupal
+FROM amazeeio/nginx-drupal
 
 COPY --from=builder /app /app
 
