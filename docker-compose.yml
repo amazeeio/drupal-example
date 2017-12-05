@@ -36,6 +36,9 @@ services:
     labels:
       lagoon.type: nginx-php
       lagoon.name: nginx-php
+## Uncomment the following lines to enable xdebug in php and then restart the php container
+#    environment:
+#       - XDEBUG_ENABLE=true
     volumes:
       - ./web:/app/web:delegated
     depends_on:
