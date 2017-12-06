@@ -38,6 +38,18 @@ if(getenv('AMAZEEIO_SITENAME')){
   );
 }
 
+### amazee.io Redis connection
+if (getenv('AMAZEEIO_SITENAME')){
+  $settings['redis.connection']['interface'] = 'PhpRedis';
+  $settings['redis.connection']['host'] = 'redis';
+  $settings['redis.connection']['port'] = '6379';
+
+  # Do not set the cache during installations of Drupal
+  if (!drupal_installation_attempted()) {
+    $settings['cache']['default'] = 'cache.backend.redis';
+  }
+}
+
 ### amazee.io Solr connection
 // WARNING: you have to create a search_api server having "solr" machine name at
 // /admin/config/search/search-api/add-server to make this work.

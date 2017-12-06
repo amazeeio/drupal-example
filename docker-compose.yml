@@ -49,6 +49,10 @@ services:
       dockerfile: Dockerfile.mariadb
     labels:
       lagoon.type: mariadb
+  redis:
+    image: lagoon/redis
+    labels:
+      lagoon.type: redis
 networks:
   amazeeio-network:
     external: true
