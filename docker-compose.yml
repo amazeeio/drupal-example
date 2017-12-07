@@ -50,7 +50,7 @@ services:
     labels:
       lagoon.type: mariadb
   redis:
-    image: lagoon/redis
+    image: amazeeio/redis
     labels:
       lagoon.type: redis
 networks:
