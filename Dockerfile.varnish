@@ -1,0 +1,2 @@
+ARG IMAGE_REPO
+FROM amazeeio/varnish-drupal

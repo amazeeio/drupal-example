@@ -6,7 +6,9 @@ services:
       dockerfile: Dockerfile.builder
     image: builder
     labels:
-      lagoon.type: cli
+      lagoon.type: cli-persistent
+      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent.name: nginx
     volumes:
       - ./web:/app/web:delegated
     volumes_from:
@@ -21,8 +23,9 @@ services:
       context: .
       dockerfile: Dockerfile.nginx
     labels:
-      lagoon.type: nginx-php
-      lagoon.name: nginx-php
+      lagoon.type: nginx-php-persistent
+      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.name: nginx
     volumes:
       - ./web:/app/web:delegated
     depends_on:
@@ -30,7 +33,7 @@ services:
     expose:
       - "8080"
     environment:
-      - AMAZEEIO_URL=drupal.docker.amazee.io
+      - AMAZEEIO_URL=drupal-nginx.docker.amazee.io
       - AMAZEEIO=AMAZEEIO
       - AMAZEEIO_HTTP_PORT=8080
   php:
@@ -38,8 +41,9 @@ services:
       context: .
       dockerfile: Dockerfile.php
     labels:
-      lagoon.type: nginx-php
-      lagoon.name: nginx-php
+      lagoon.type: nginx-php-persistent
+      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.name: nginx
 ## Uncomment the following lines to enable xdebug in php and then restart the php container
 #    environment:
 #       - XDEBUG_ENABLE=true
@@ -57,6 +61,21 @@ services:
     image: amazeeio/redis
     labels:
       lagoon.type: redis
+  varnish:
+    build:
+      context: .
+      dockerfile: Dockerfile.varnish
+    networks:
+      - amazeeio-network
+      - default
+    labels:
+      lagoon.type: varnish
+    depends_on:
+      - nginx
+    environment:
+      - AMAZEEIO_URL=drupal.docker.amazee.io
+      - AMAZEEIO=AMAZEEIO
+      - AMAZEEIO_HTTP_PORT=8080
 networks:
   amazeeio-network:
     external: true

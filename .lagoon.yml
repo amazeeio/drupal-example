@@ -1,5 +1,9 @@
 docker-compose-yaml: docker-compose.yml
 
+project: drupal-example
+endpoint: api-lagoon-master.lagoon.ch.amazee.io:31472
+api: api-lagoon-master.lagoon.ch.amazee.io:80
+
 tasks:
   post-rollout:
     - run:
