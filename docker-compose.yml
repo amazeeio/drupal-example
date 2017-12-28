@@ -9,6 +9,10 @@ services:
       lagoon.type: cli
     volumes:
       - ./web:/app/web:delegated
+    volumes_from:
+      - container:amazeeio-ssh-agent
+    environment:
+      - SSH_AUTH_SOCK=/tmp/amazeeio_ssh-agent/socket
   nginx:
     networks:
       - amazeeio-network
