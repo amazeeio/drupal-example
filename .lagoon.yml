@@ -13,7 +13,6 @@ tasks:
     - run:
         name: IF no Drupal installed drush si with no email sending
         command: |
-            cd web
             if [[ $(drush core-status bootstrap --pipe) == "" ]]; then
                 # no drupal installed, we install drupal from scratch
                 drush si config_installer -y --account-name=admin --account-pass=admin install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL || true
@@ -21,9 +20,21 @@ tasks:
         service: cli
     - run:
         name: drush cim
-        command: cd web && drush -y cim
+        command: drush -y cim
         service: cli
     - run:
         name: drush cr
-        command: cd web && drush -y cr
+        command: drush -y cr
         service: cli
+
+cronjobs:
+  - name: drush cron
+    schedule: "*/15 * * * *"
+    command: drush cron
+    service: cli
+
+# environments:
+#   master:
+#     routes:
+#         - nginx:
+#             - "domain.com"

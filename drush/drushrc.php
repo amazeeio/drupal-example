@@ -8,8 +8,8 @@
  */
 
 ### Base URL so Drush knows on which URL the site runs (needed for cron, etc.)
-if (getenv('AMAZEEIO_BASE_URL')) {
-  $options['uri'] = getenv('AMAZEEIO_BASE_URL');
+if (getenv('LAGOON_ROUTE')) {
+  $options['uri'] = str_replace(['https://', 'http://'], ['', ''], getenv('LAGOON_ROUTE'));
 }
 
 ### Skip data for some tables during sql dumps and syncs

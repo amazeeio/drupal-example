@@ -11,6 +11,9 @@ services:
       lagoon.persistent.name: nginx
     volumes:
       - ./web:/app/web:delegated
+      - ./config:/app/config:delegated
+      - ./composer.json:/app/composer.json:delegated
+      - ./composer.lock:/app/composer.lock:delegated
     volumes_from:
       - container:amazeeio-ssh-agent
     environment:
@@ -28,6 +31,9 @@ services:
       lagoon.name: nginx
     volumes:
       - ./web:/app/web:delegated
+      - ./config:/app/config:delegated
+      - ./composer.json:/app/composer.json:delegated
+      - ./composer.lock:/app/composer.lock:delegated
     depends_on:
       - cli
     expose:
@@ -44,17 +50,18 @@ services:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.name: nginx
-## Uncomment the following lines to enable xdebug in php and then restart the php container
-#    environment:
-#       - XDEBUG_ENABLE=true
+# # Uncomment the following lines to enable xdebug in php and then restart the php container
+#     environment:
+#        - XDEBUG_ENABLE=true
     volumes:
       - ./web:/app/web:delegated
+      - ./config:/app/config:delegated
+      - ./composer.json:/app/composer.json:delegated
+      - ./composer.lock:/app/composer.lock:delegated
     depends_on:
       - cli
   mariadb:
-    build:
-      context: .
-      dockerfile: Dockerfile.mariadb
+    image: amazeeio/centos7-mariadb10-drupal
     labels:
       lagoon.type: mariadb
   redis:
@@ -62,9 +69,7 @@ services:
     labels:
       lagoon.type: redis
   varnish:
-    build:
-      context: .
-      dockerfile: Dockerfile.varnish
+    image: amazeeio/varnish-drupal
     networks:
       - amazeeio-network
       - default
