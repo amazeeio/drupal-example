@@ -1,4 +1,21 @@
-version: '2'
+version: '2.3'
+
+x-volumes:
+  &default-volumes
+    volumes:
+      - ./web:/app/web:delegated
+      - ./config:/app/config:delegated
+      - ./composer.json:/app/composer.json:delegated
+      - ./composer.lock:/app/composer.lock:delegated
+
+x-environment:
+  &default-environment
+    # Add your lagoon project name
+    LAGOON_PROJECT: drupal-example
+    # Main route that should be used locally
+    LAGOON_ROUTE: http://drupal-nginx.docker.amazee.io
+
+
 services:
   cli:
     build:
@@ -9,20 +26,14 @@ services:
       lagoon.type: cli-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.persistent.name: nginx
-    volumes:
-      - ./web:/app/web:delegated
-      - ./config:/app/config:delegated
-      - ./composer.json:/app/composer.json:delegated
-      - ./composer.lock:/app/composer.lock:delegated
+    << : *default-volumes
     volumes_from:
       - container:amazeeio-ssh-agent
     environment:
-      - SSH_AUTH_SOCK=/tmp/amazeeio_ssh-agent/socket
-      - LAGOON_ROUTE=http://drupal-nginx.docker.amazee.io
+      << : *default-environment
+      SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket
+
   nginx:
-    networks:
-      - amazeeio-network
-      - default
     build:
       context: .
       dockerfile: Dockerfile.nginx
@@ -30,19 +41,18 @@ services:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.name: nginx
-    volumes:
-      - ./web:/app/web:delegated
-      - ./config:/app/config:delegated
-      - ./composer.json:/app/composer.json:delegated
-      - ./composer.lock:/app/composer.lock:delegated
+    << : *default-volumes
     depends_on:
       - cli
-    expose:
-      - "8080"
     environment:
-      - AMAZEEIO_URL=drupal-nginx.docker.amazee.io
-      - AMAZEEIO=AMAZEEIO
-      - AMAZEEIO_HTTP_PORT=8080
+      << : *default-environment
+      AMAZEEIO_URL: drupal-nginx.docker.amazee.io
+      AMAZEEIO: AMAZEEIO
+      AMAZEEIO_HTTP_PORT: 8080
+    networks:
+      - amazeeio-network
+      - default
+
   php:
     build:
       context: .
@@ -51,37 +61,43 @@ services:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.name: nginx
-# # Uncomment the following lines to enable xdebug in php and then restart the php container
-#     environment:
-#        - XDEBUG_ENABLE=true
-    volumes:
-      - ./web:/app/web:delegated
-      - ./config:/app/config:delegated
-      - ./composer.json:/app/composer.json:delegated
-      - ./composer.lock:/app/composer.lock:delegated
+    << : *default-volumes
     depends_on:
       - cli
+    environment:
+       << : *default-environment
+# # Uncomment the following lines to enable xdebug in php and then restart the php container
+#        XDEBUG_ENABLE: true
+
   mariadb:
     image: amazeeio/centos7-mariadb10-drupal
     labels:
       lagoon.type: mariadb
+    environment:
+      << : *default-environment
+
   redis:
     image: amazeeio/redis
     labels:
       lagoon.type: redis
+    environment:
+      << : *default-environment
+
   varnish:
     image: amazeeio/varnish-drupal
-    networks:
-      - amazeeio-network
-      - default
     labels:
       lagoon.type: varnish
     depends_on:
       - nginx
     environment:
-      - AMAZEEIO_URL=drupal.docker.amazee.io
-      - AMAZEEIO=AMAZEEIO
-      - AMAZEEIO_HTTP_PORT=8080
+      << : *default-environment
+      AMAZEEIO_URL: drupal.docker.amazee.io
+      AMAZEEIO: AMAZEEIO
+      AMAZEEIO_HTTP_PORT: 8080
+    networks:
+      - amazeeio-network
+      - default
+
 networks:
   amazeeio-network:
     external: true
