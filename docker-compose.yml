@@ -18,6 +18,7 @@ services:
       - container:amazeeio-ssh-agent
     environment:
       - SSH_AUTH_SOCK=/tmp/amazeeio_ssh-agent/socket
+      - LAGOON_ROUTE=http://drupal-nginx.docker.amazee.io
   nginx:
     networks:
       - amazeeio-network
