@@ -1,7 +1,12 @@
 version: '2.3'
 
+x-lagoon-project:
+  # Lagoon project name (leave `&lagoon-project` when you edit this)
+  &lagoon-project drupal-example
+
 x-volumes:
   &default-volumes
+    # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - ./web:/app/web:delegated
       - ./config:/app/config:delegated
@@ -10,42 +15,46 @@ x-volumes:
 
 x-environment:
   &default-environment
-    # Add your lagoon project name
-    LAGOON_PROJECT: drupal-example
-    # Main route that should be used locally
+    LAGOON_PROJECT: *lagoon-project
+    # Route that should be used locally
     LAGOON_ROUTE: http://drupal-nginx.docker.amazee.io
+    # uncomment if you like to have the system behave like in production
+    #LAGOON_ENVIRONMENT_TYPE: production
 
 
 services:
+  # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
   cli:
     build:
       context: .
-      dockerfile: Dockerfile.builder
-    image: builder
+      dockerfile: Dockerfile.cli
+    image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     labels:
+      # Lagoon Labels
       lagoon.type: cli-persistent
-      lagoon.persistent: /app/web/sites/default/files/
-      lagoon.persistent.name: nginx
-    << : *default-volumes
-    volumes_from:
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+    << : *default-volumes # loads the defined volumes from the top
+    volumes_from: # mount the ssh-agent from the pygmy or cachalot ssh-agent
       - container:amazeeio-ssh-agent
     environment:
-      << : *default-environment
-      SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket
+      << : *default-environment # loads the defined environment variables from the top
+      SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket # where to find the socker from the ssh-agent
 
   nginx:
     build:
       context: .
       dockerfile: Dockerfile.nginx
+      args:
+        CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
       lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/
-      lagoon.name: nginx
-    << : *default-volumes
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+    << : *default-volumes # loads the defined volumes from the top
     depends_on:
-      - cli
+      - cli # basically just tells docker-compose to build the cli first
     environment:
-      << : *default-environment
+      << : *default-environment # loads the defined environment variables from the top
       AMAZEEIO_URL: drupal-nginx.docker.amazee.io
       AMAZEEIO: AMAZEEIO
       AMAZEEIO_HTTP_PORT: 8080
@@ -57,17 +66,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.php
+      args:
+        CLI_IMAGE: *lagoon-project
     labels:
       lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/
-      lagoon.name: nginx
-    << : *default-volumes
+      lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+    << : *default-volumes # loads the defined volumes from the top
     depends_on:
-      - cli
+      - cli # basically just tells docker-compose to build the cli first
     environment:
-       << : *default-environment
-# # Uncomment the following lines to enable xdebug in php and then restart the php container
-#        XDEBUG_ENABLE: true
+      << : *default-environment # loads the defined environment variables from the top
+      # Uncomment the following lines to enable xdebug in php and then restart via `docker-compose up -d`
+      #XDEBUG_ENABLE: "true"
 
   mariadb:
     image: amazeeio/centos7-mariadb10-drupal
