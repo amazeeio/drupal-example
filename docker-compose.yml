@@ -98,8 +98,6 @@ services:
     image: amazeeio/varnish-drupal
     labels:
       lagoon.type: varnish
-    depends_on:
-      - nginx
     links:
       - nginx      
     environment:
