@@ -27,7 +27,7 @@
 
 ### Lagoon Database connection
 if(getenv('LAGOON')){
-  $mariadb_port = preg_replace('/:(\d{2,5})$/', '$1', getenv('MARIADB_PORT') ?: '3306'); // Kubernetes/OpenShift sets `*_PORT` by default as tcp://172.30.221.159:8983, extract the port from it
+  $mariadb_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('MARIADB_PORT') ?: '3306'); // Kubernetes/OpenShift sets `*_PORT` by default as tcp://172.30.221.159:8983, extract the port from it
   $databases['default']['default'] = array(
     'driver' => 'mysql',
     'database' => getenv('MARIADB_DATABASE') ?: 'drupal',
@@ -43,7 +43,7 @@ if(getenv('LAGOON')){
 // WARNING: you have to create a search_api server having "solr" machine name at
 // /admin/config/search/search-api/add-server to make this work.
 if (getenv('LAGOON')) {
-  $solr_port = preg_replace('/:(\d{2,5})$/', '$1', getenv('SOLR_PORT') ?: '8983') ;
+  $solr_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('SOLR_PORT') ?: '8983') ;
   $config['search_api.server.solr']['backend_config']['connector_config']['host'] = getenv('SOLR_HOST') ?: 'solr';
   $config['search_api.server.solr']['backend_config']['connector_config']['path'] = '/solr/';
   $config['search_api.server.solr']['backend_config']['connector_config']['core'] = getenv('SOLR_CORE') ?: 'drupal';
@@ -57,7 +57,7 @@ if (getenv('LAGOON')) {
 
 ### Lagoon Redis connection
 if (getenv('LAGOON')){
-  $redis_port = preg_replace('/:(\d{2,5})$/', '$1', getenv('REDIS_PORT') ?: '6379');
+  $redis_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('REDIS_PORT') ?: '6379');
   $settings['redis.connection']['interface'] = 'PhpRedis';
   $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
   $settings['redis.connection']['port'] = $redis_port;
