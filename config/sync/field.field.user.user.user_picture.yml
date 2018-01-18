@@ -1,4 +1,4 @@
-uuid: 629a3326-6a72-4d7b-b70a-10ad5922dbcb
+uuid: 57e6a1f0-cd85-4f1e-b94c-38cd7d4221d4
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
     - image
     - user
 _core:
-  default_config_hash: cL7i1kgJvlJa6H00f0E_fZ2KdD1ag0ASpLts0K-KNII
+  default_config_hash: Iiq0AttdhgbebJwabSFwQQ1ORn64GoGz0xSZ_eyCJ8A
 id: user.user.user_picture
 field_name: user_picture
 entity_type: user
@@ -22,10 +22,10 @@ default_value_callback: ''
 settings:
   file_extensions: 'png gif jpg jpeg'
   file_directory: 'pictures/[date:custom:Y]-[date:custom:m]'
-  max_filesize: '30 KB'
+  max_filesize: ''
   alt_field: false
   title_field: false
-  max_resolution: 85x85
+  max_resolution: ''
   min_resolution: ''
   default_image:
     uuid: null

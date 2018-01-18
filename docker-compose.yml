@@ -60,6 +60,12 @@ services:
     image: amazeeio/redis
     labels:
       lagoon.type: redis
+  solr:
+    image: amazeeio/solr:6.6-drupal
+    labels:
+      lagoon.type: solr
+    ports:
+    - "8983"
   varnish:
     image: amazeeio/varnish-drupal
     networks:
