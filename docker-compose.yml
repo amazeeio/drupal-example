@@ -26,7 +26,7 @@ services:
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
-      # lagoon.persistent.class: bulk
+      lagoon.persistent.class: bulk
       lagoon.name: nginx
     volumes:
       - .:/app:delegated
@@ -46,7 +46,7 @@ services:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.name: nginx
-      # lagoon.persistent.class: bulk
+      lagoon.persistent.class: bulk
 # # Uncomment the following lines to enable xdebug in php and then restart the php container
 #     environment:
 #        - XDEBUG_ENABLE=true
