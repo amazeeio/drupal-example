@@ -73,7 +73,7 @@ services:
       - default
     labels:
       lagoon.type: varnish
-    depends_on:
+    links:
       - nginx
     environment:
       - AMAZEEIO_URL=drupal.docker.amazee.io
