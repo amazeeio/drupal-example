@@ -27,14 +27,15 @@ tasks:
         command: drush -y cr
         service: cli
 
-cronjobs:
-  - name: drush cron
-    schedule: "*/15 * * * *"
-    command: drush cron
-    service: cli
 
-# environments:
-#   master:
-#     routes:
-#         - nginx:
-#             - "domain.com"
+
+environments:
+  master:
+    cronjobs:
+      - name: drush cron
+        schedule: "*/15 * * * *"
+        command: drush cron
+        service: cli
+#   routes:
+#       - nginx:
+#           - "domain.com"
