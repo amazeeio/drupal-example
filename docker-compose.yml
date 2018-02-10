@@ -26,6 +26,7 @@ services:
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent.class: bulk
       lagoon.name: nginx
     volumes:
       - .:/app:delegated
@@ -45,6 +46,7 @@ services:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/
       lagoon.name: nginx
+      lagoon.persistent.class: bulk
 # # Uncomment the following lines to enable xdebug in php and then restart the php container
 #     environment:
 #        - XDEBUG_ENABLE=true
@@ -60,12 +62,6 @@ services:
     image: amazeeio/redis
     labels:
       lagoon.type: redis
-  solr:
-    image: amazeeio/solr:6.6-drupal
-    labels:
-      lagoon.type: solr
-    ports:
-    - "8983"
   varnish:
     image: amazeeio/varnish-drupal
     networks:
