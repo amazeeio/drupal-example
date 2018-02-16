@@ -7,11 +7,6 @@
  * It contains some defaults that the amazee.io team suggests, please edit them as required.
  */
 
-### Base URL so Drush knows on which URL the site runs (needed for cron, etc.)
-if (getenv('LAGOON_ROUTE')) {
-  $options['uri'] = str_replace(['https://', 'http://'], ['', ''], getenv('LAGOON_ROUTE'));
-}
-
 ### Skip data for some tables during sql dumps and syncs
 # These tables will be syncronized just as structure and not the data inside them, this makes syncing and dumping much faster
 # In case you need these tables, call the 'sql-sync' or 'sql-dump' command with: --no-structure-tables-list
