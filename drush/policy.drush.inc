@@ -29,10 +29,24 @@ function _deny_message() {
 }
 
 /**
+ * Implements drush_hook_COMMAND_validate().
+ *
+ * Encourage people to use config_installer instead of no profile
+ */
+function drush_policy_site_install_validate($profile = null) {
+  if ($profile != "config_installer" && !drush_get_option('force')) {
+    return drush_set_error('POLICY_PM_DENY', dt("This Drupal is configured with config_installer. Please use `drush site-install config_installer` or overwrite with `--force` if you know what you do."));
+  }
+}
+
+/**
  * Implements hook_drush_help_alter().
  */
 function policy_drush_help_alter(&$command) {
   if (in_array($command['command'], array('pm-updatecode', 'pm-update', 'pm-download'))) {
     $command['options']['pm-force'] = 'Override site policy and allow Drush codebase management (pm-* commands)';
+  }
+  if (in_array($command['command'], array('site-install'))) {
+    $command['options']['force'] = 'Override site policy and allow Drush to install with any profile';
   }
 }

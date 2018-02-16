@@ -8,18 +8,17 @@ x-volumes:
   &default-volumes
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
-      - ./web:/app/web:delegated
-      - ./config:/app/config:delegated
-      - ./composer.json:/app/composer.json:delegated
-      - ./composer.lock:/app/composer.lock:delegated
+      - .:/app:delegated
 
 x-environment:
   &default-environment
     LAGOON_PROJECT: *lagoon-project
     # Route that should be used locally
     LAGOON_ROUTE: http://drupal-nginx.docker.amazee.io
-    # uncomment if you like to have the system behave like in production
+    # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
+    # Uncomment to enable xdebug and then restart via `docker-compose up -d`
+    #XDEBUG_ENABLE: "true"    
 
 
 services:
@@ -77,8 +76,7 @@ services:
       - cli # basically just tells docker-compose to build the cli first
     environment:
       << : *default-environment # loads the defined environment variables from the top
-      # Uncomment the following lines to enable xdebug in php and then restart via `docker-compose up -d`
-      #XDEBUG_ENABLE: "true"
+
 
   mariadb:
     image: amazeeio/centos7-mariadb10-drupal
@@ -94,12 +92,20 @@ services:
     environment:
       << : *default-environment
 
+  solr:
+    image: amazeeio/solr:6.6-drupal
+    labels:
+      lagoon.type: solr
+    environment:
+      << : *default-environment    
+
+
   varnish:
     image: amazeeio/varnish-drupal
     labels:
       lagoon.type: varnish
     links:
-      - nginx      
+      - nginx
     environment:
       << : *default-environment
       AMAZEEIO_URL: drupal.docker.amazee.io

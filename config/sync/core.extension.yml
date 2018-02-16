@@ -30,6 +30,8 @@ module:
   rdf: 0
   redis: 0
   search: 0
+  search_api: 0
+  search_api_solr: 0
   shortcut: 0
   system: 0
   taxonomy: 0
