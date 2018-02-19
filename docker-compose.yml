@@ -18,12 +18,12 @@ x-environment:
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
-    #XDEBUG_ENABLE: "true"    
+    #XDEBUG_ENABLE: "true"
 
 
 services:
-  # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
-  cli:
+
+  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     build:
       context: .
       dockerfile: Dockerfile.cli
@@ -38,7 +38,6 @@ services:
       - container:amazeeio-ssh-agent
     environment:
       << : *default-environment # loads the defined environment variables from the top
-      SSH_AUTH_SOCK: /tmp/amazeeio_ssh-agent/socket # where to find the socker from the ssh-agent
 
   nginx:
     build:
@@ -54,9 +53,6 @@ services:
       - cli # basically just tells docker-compose to build the cli first
     environment:
       << : *default-environment # loads the defined environment variables from the top
-      AMAZEEIO_URL: drupal-nginx.docker.amazee.io
-      AMAZEEIO: AMAZEEIO
-      AMAZEEIO_HTTP_PORT: 8080
     networks:
       - amazeeio-network
       - default
@@ -79,9 +75,11 @@ services:
 
 
   mariadb:
-    image: amazeeio/centos7-mariadb10-drupal
+    image: amazeeio/mariadb
     labels:
       lagoon.type: mariadb
+    ports:
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
     environment:
       << : *default-environment
 
@@ -96,8 +94,10 @@ services:
     image: amazeeio/solr:6.6-drupal
     labels:
       lagoon.type: solr
+    ports:
+      - "8983" # exposes the port 8983 with a random local port, find it with `docker-compose port solr 8983`
     environment:
-      << : *default-environment    
+      << : *default-environment
 
 
   varnish:
@@ -105,12 +105,10 @@ services:
     labels:
       lagoon.type: varnish
     links:
-      - nginx
+      - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     environment:
       << : *default-environment
-      AMAZEEIO_URL: drupal.docker.amazee.io
-      AMAZEEIO: AMAZEEIO
-      AMAZEEIO_HTTP_PORT: 8080
+      LAGOON_LOCALDEV_URL: drupal-varnish.docker.amazee.io # generate another route for varnish
     networks:
       - amazeeio-network
       - default
