@@ -1,4 +1,4 @@
 .git
-.amazeeio.yml
+.lagoon.yml
 docker-compose.yml
 vendor
