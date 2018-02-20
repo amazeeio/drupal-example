@@ -42,11 +42,10 @@ if(getenv('LAGOON')){
 // WARNING: you have to create a search_api server having "solr" machine name at
 // /admin/config/search/search-api/add-server to make this work.
 if (getenv('LAGOON')) {
-  $solr_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('SOLR_PORT') ?: '8983') ;
   $config['search_api.server.solr']['backend_config']['connector_config']['host'] = getenv('SOLR_HOST') ?: 'solr';
   $config['search_api.server.solr']['backend_config']['connector_config']['path'] = '/solr/';
   $config['search_api.server.solr']['backend_config']['connector_config']['core'] = getenv('SOLR_CORE') ?: 'drupal';
-  $config['search_api.server.solr']['backend_config']['connector_config']['port'] = $solr_port;
+  $config['search_api.server.solr']['backend_config']['connector_config']['port'] = 8983;
   $config['search_api.server.solr']['backend_config']['connector_config']['http_user'] = (getenv('SOLR_USER') ?: '');
   $config['search_api.server.solr']['backend_config']['connector_config']['http']['http_user'] = (getenv('SOLR_USER') ?: '');
   $config['search_api.server.solr']['backend_config']['connector_config']['http_pass'] = (getenv('SOLR_PASSWORD') ?: '');
@@ -56,10 +55,9 @@ if (getenv('LAGOON')) {
 
 ### Lagoon Redis connection
 if (getenv('LAGOON')){
-  $redis_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('REDIS_PORT') ?: '6379');
   $settings['redis.connection']['interface'] = 'PhpRedis';
   $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
-  $settings['redis.connection']['port'] = $redis_port;
+  $settings['redis.connection']['port'] = 6379;
 
   // HINT: Uncomment in order to enable Redis
   // # Do not set the cache during installations of Drupal
