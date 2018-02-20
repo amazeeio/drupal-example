@@ -27,14 +27,13 @@
 
 ### Lagoon Database connection
 if(getenv('LAGOON')){
-  $mariadb_port = preg_replace('/.*:(\d{2,5})$/', '$1', getenv('MARIADB_PORT') ?: '3306'); // Kubernetes/OpenShift sets `*_PORT` by default as tcp://172.30.221.159:8983, extract the port from it
   $databases['default']['default'] = array(
-    'driver' => 'mysql',
-    'database' => getenv('MARIADB_DATABASE') ?: 'drupal',
-    'username' => getenv('MARIADB_USERNAME') ?: 'drupal',
-    'password' => getenv('MARIADB_PASSWORD') ?: 'drupal',
-    'host' => getenv('MARIADB_HOST') ?: 'mariadb',
-    'port' => $mariadb_port,
+    'driver' => 'pgsql',
+    'database' => getenv('POSTGRES_DATABASE') ?: 'drupal',
+    'username' => getenv('POSTGRES_USERNAME') ?: 'drupal',
+    'password' => getenv('POSTGRES_PASSWORD') ?: 'drupal',
+    'host' => getenv('POSTGRES_HOST') ?: 'postgres',
+    'port' => 5432,
     'prefix' => '',
   );
 }
