@@ -13,7 +13,7 @@ _core:
 id: bartik_main_menu
 theme: bartik
 region: primary_menu
-weight: 0
+weight: -5
 provider: null
 plugin: 'system_menu_block:main'
 settings:
