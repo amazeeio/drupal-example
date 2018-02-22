@@ -1,5 +1,8 @@
 docker-compose-yaml: docker-compose.yml
 
+endpoint: ssh.lagoon.amazeeio.cloud:32222
+api: api.lagoon.amazeeio.cloud:80
+
 tasks:
   post-rollout:
     - run:
