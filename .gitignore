@@ -11,8 +11,8 @@
 /web/sites/*/files/
 
 # Ingore files that are only for the current local environment
-web/sites/*/local.settings.php
-web/sites/*/local.services.yml
+web/sites/*/settings.local.php
+web/sites/*/services.local.yml
 
 # Ignore SimpleTest multi-site environment.
 web/sites/simpletest
