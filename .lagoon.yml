@@ -1,8 +1,5 @@
 docker-compose-yaml: docker-compose.yml
 
-ssh: api-lagoon-master.web-vmw-drupal.urz.uni-heidelberg.de:30848
-api: http://api-lagoon-master.web-vmw-drupal.urz.uni-heidelberg.de
-
 tasks:
   post-rollout:
     - run:
