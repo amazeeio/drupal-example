@@ -24,8 +24,14 @@ module:
   menu_ui: 0
   node: 0
   options: 0
-  page_cache: 0
   path: 0
+  purge: 0
+  purge_drush: 0
+  purge_processor_cron: 0
+  purge_processor_lateruntime: 0
+  purge_queuer_coretags: 0
+  purge_tokens: 0
+  purge_ui: 0
   quickedit: 0
   rdf: 0
   redis: 0
@@ -40,6 +46,8 @@ module:
   tour: 0
   update: 0
   user: 0
+  varnish_purge_tags: 0
+  varnish_purger: 0
   views_ui: 0
   menu_link_content: 1
   views: 10

@@ -1,0 +1,21 @@
+purgers:
+  -
+    order_index: 2
+    instance_id: b551268c9e
+    plugin_id: varnishbundled
+processors:
+  -
+    plugin_id: drush_purge_invalidate
+    status: true
+  -
+    plugin_id: drush_purge_queue_work
+    status: true
+  -
+    plugin_id: cron
+    status: true
+  -
+    plugin_id: lateruntime
+    status: true
+  -
+    plugin_id: purge_ui_block_processor
+    status: true
