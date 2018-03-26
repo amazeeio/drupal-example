@@ -5,5 +5,7 @@ FROM amazeeio/nginx-drupal
 
 COPY --from=cli /app /app
 
+COPY realip.conf /etc/nginx/conf.d/realip.conf
+
 # Define where the Drupal Root is located
 ENV WEBROOT=web
