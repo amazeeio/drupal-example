@@ -14,6 +14,7 @@ tasks:
                 drush si config_installer -y --account-name=admin --account-pass=admin install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL
             fi
         service: cli
+        shell: bash
     - run:
         name: drush cim
         command: drush -y cim
