@@ -33,6 +33,6 @@ environments:
         schedule: "*/15 * * * *"
         command: drush cron
         service: cli
-#   routes:
-#       - nginx:
-#           - "domain.com"
+    routes:
+        - varnish:
+            - "drupal-example.amazee.io"
