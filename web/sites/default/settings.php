@@ -41,7 +41,7 @@ if(getenv('LAGOON')){
 ### Lagoon Solr connection
 // WARNING: you have to create a search_api server having "solr" machine name at
 // /admin/config/search/search-api/add-server to make this work.
-if (getenv('LAGOON')) {
+if (getenv('LAGOON') && (file_exists($app_root . '/modules/contrib/search_api_solr') || file_exists($app_root . 'modules/search_api_solr'))) {
   $config['search_api.server.solr']['backend_config']['connector_config']['host'] = getenv('SOLR_HOST') ?: 'solr';
   $config['search_api.server.solr']['backend_config']['connector_config']['path'] = '/solr/';
   $config['search_api.server.solr']['backend_config']['connector_config']['core'] = getenv('SOLR_CORE') ?: 'drupal';
@@ -53,8 +53,8 @@ if (getenv('LAGOON')) {
   $config['search_api.server.solr']['name'] = 'Lagoon Solr - Environment: ' . getenv('LAGOON_PROJECT');
 }
 
-### Lagoon Redis connection
-if (getenv('LAGOON')){
+### Lagoon Redis connection if Drupal Redis module exists and PHP Redis Module is loaded
+if (getenv('LAGOON') && (file_exists($app_root . '/modules/contrib/redis') || file_exists($app_root . 'modules/redis')) && extension_loaded('redis')){
   $settings['redis.connection']['interface'] = 'PhpRedis';
   $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
   $settings['redis.connection']['port'] = 6379;
@@ -62,7 +62,7 @@ if (getenv('LAGOON')){
   $settings['cache_prefix']['default'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_GIT_SAFE_BRANCH');
 
   # Do not set the cache during installations of Drupal
-  if (!drupal_installation_attempted() && extension_loaded('redis')) {
+  if (!drupal_installation_attempted()) {
     $settings['cache']['default'] = 'cache.backend.redis';
 
     // Include the default example.services.yml from the module, which will
@@ -107,11 +107,6 @@ if (getenv('LAGOON')){
       ],
     ];
   }
-}
-
-### Lagoon Reverse proxy settings
-if (getenv('LAGOON')) {
-  $settings['reverse_proxy'] = TRUE;
 }
 
 ### Trusted Host Patterns, see https://www.drupal.org/node/2410395 for more information.

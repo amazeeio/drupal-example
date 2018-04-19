@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * amazee.io Drupal 8 example settings.local.php file
+ * Lagoon Drupal 8 example settings.local.php file
  *
  * This file will not be included and is just an example file.
  * If you would like to use this file, copy it to the name 'settings.local.php' (this file will be exluded from Git)
