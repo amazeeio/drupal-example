@@ -77,6 +77,11 @@
                 "sites/development.services.yml",
                 "sites/example.settings.local.php"
             ]
+        },
+        "patches": {
+            "drupal/redis": {
+                "try/catch exception handling": "https://gist.githubusercontent.com/Schnitzel/2c3562c50e0f5ca88a11be39ab0c1957/raw/962aee4ade4c37cbf38ad82ab4da984645bb1378/redis.patch"
+            }
         }
     }
 }
