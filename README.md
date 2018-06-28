@@ -114,3 +114,4 @@ section of composer.json:
     }
 }
 ```
+demo build
