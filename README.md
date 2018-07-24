@@ -3,33 +3,32 @@
 This project template should provide a kickstart for managing your site
 dependencies with [Composer](https://getcomposer.org/). It is based on the [original Drupal Composer Template](https://github.com/drupal-composer/drupal-project), but includes everything necessary to run on amazee.io (either the local development environment or on amazee.io servers.)
 
-## Usage
+## Requirements
 
-First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+* [docker](https://docs.docker.com/install/).
+* [pygmy](https://docs.amazee.io/local_docker_development/pygmy.html) `gem install pygmy` (you might need sudo for this depending on your ruby configuration)
 
-> Note: The instructions below refer to the [global composer installation](https://getcomposer.org/doc/00-intro.md#globally).
-You might need to replace `composer` with `php composer.phar` (or similar)
-for your setup.
+## Local environment setup
 
-After that you can create the project:
-
-```
-composer create-project amazeeio/drupal-project:8.x-dev some-dir --stability dev --no-interaction
-```
-
-Now edit `.amazeeio.yml` and `docker-compose.yml` based on your needs.
-
-With `composer require ...` you can download new dependencies to your
-installation.
+1. Checkout project repo and confirm the path is in docker's file sharing config - https://docs.docker.com/docker-for-mac/#file-sharing
 
 ```
-cd some-dir
-composer require drupal/devel:~1.0
+git clone https://github.com/amazeeio/drupal-example.git drupal8-lagoon && cd $_
 ```
 
-The `composer create-project` command passes ownership of all files to the
-project that is created. You should create a new git repository, and commit
-all files not excluded by the .gitignore file.
+2. Make sure you don't have anything running on port 80 on the host machine (like a web server) then run `pygmy up`
+
+3. Build and start the build images
+
+```
+docker-compose up -d
+docker-compose exec cli composer install
+```
+
+4. Visit the new site @ `http://drupal-example.docker.amazee.io`
+
+* If any steps fail you're safe to rerun from any point,
+starting again from the beginning will just reconfirm the changes.
 
 ## What does the template do?
 
