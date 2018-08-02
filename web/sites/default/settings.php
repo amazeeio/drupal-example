@@ -25,8 +25,6 @@
  *
  */
 
-die("hello");
-
 ### Lagoon Database connection
 if(getenv('LAGOON')){
   $databases['default']['default'] = array(
