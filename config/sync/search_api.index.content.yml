@@ -13,11 +13,6 @@ name: content
 description: ''
 read_only: false
 field_settings:
-  title:
-    label: Title
-    datasource_id: 'entity:node'
-    property_path: title
-    type: string
   body:
     label: Body
     datasource_id: 'entity:node'
@@ -26,6 +21,11 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.body
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: string
 datasource_settings:
   'entity:node':
     bundles:
