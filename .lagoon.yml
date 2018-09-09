@@ -3,8 +3,8 @@ docker-compose-yaml: docker-compose.yml
 tasks:
   pre-rollout:
     - run:
-        name: drush backup
-        command: drush -y ard --overwrite --destination=/app/sites/default/files/private/pre-deploy.tar.gz
+        name: drush sql-dump
+        command: mkdir -p /app/web/sites/default/files/private/ && drush sql-dump --ordered-dump --gzip --result-file=/app/web/sites/default/files/private/pre-deploy-dump.sql.gz || true
         service: cli
 
   post-rollout:
