@@ -164,5 +164,3 @@ if (file_exists(__DIR__ . '/services.local.yml')) {
 }
 
 $settings['install_profile'] = 'config_installer';
-
-die('test');
