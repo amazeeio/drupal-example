@@ -1,5 +1,5 @@
 host: application-logs.lagoon.svc
-port: 5555
-identifier: DRUPAL
+port: 5140
+identifier: drupal
 _core:
   default_config_hash: DpejRB2DnNRXcSTNpBTyKk1Q64JgfQwMUqZ0l-Bcj_U

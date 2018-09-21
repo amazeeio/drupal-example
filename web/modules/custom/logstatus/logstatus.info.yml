@@ -1,0 +1,6 @@
+name: logstatus
+description: Simple monolog wrapper for Lagoon.
+package: Custom
+
+type: module
+core: 8.x
