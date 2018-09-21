@@ -1885,7 +1885,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/lagoon_logs",
-                "reference": "940369218e38fc8bd99312a3f1fcaec786ef866f"
+                "reference": "57f64e16a6cc87af2d6a0ac9394a628b4200fa73"
             },
             "require": {
                 "drupal/core": "~8.0",
@@ -1898,7 +1898,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1537484580",
+                    "datestamp": "1537500180",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -1921,7 +1921,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/lagoon_logs"
             },
-            "time": "2018-09-21T02:32:56+00:00"
+            "time": "2018-09-21T04:33:26+00:00"
         },
         {
             "name": "drupal/purge",
