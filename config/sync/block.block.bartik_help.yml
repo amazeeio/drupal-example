@@ -1,4 +1,4 @@
-uuid: 2c20d403-815d-4a1a-a592-80035e4eae37
+uuid: 926e7739-c976-43e4-92ef-c58979cad9f6
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: bartik_help
 theme: bartik
 region: content
-weight: -6
+weight: -30
 provider: null
 plugin: help_block
 settings:
