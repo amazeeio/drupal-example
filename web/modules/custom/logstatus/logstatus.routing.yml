@@ -1,0 +1,7 @@
+lagoon_logs.module_info:
+  path: '/logstatus'
+  defaults:
+    _controller: '\Drupal\logstatus\LogstatusController::infoPage'
+    _title: 'Lagoon Logs Settings'
+  requirements:
+    _permission: 'access content'
