@@ -48,3 +48,6 @@ environments:
     routes:
         - varnish:
             - "drupal-example.amazee.io"
+  shared-mariadb:
+    types:
+      mariadb: mariadb-shared
