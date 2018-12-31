@@ -85,7 +85,7 @@ services:
   mariadb:
     image: amazeeio/mariadb-drupal
     labels:
-      lagoon.type: mariadb-single
+      lagoon.type: mariadb-shared
     ports:
       - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
     << : *default-user # uses the defined user from top
