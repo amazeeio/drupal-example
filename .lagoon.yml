@@ -10,10 +10,6 @@ tasks:
 #         service: cli
 
   post-rollout:
-    - run:
-        name: env variables
-        command: env
-        service: cli
     # - run:
     #     name: IF no Drupal installed drush si with no email sending
     #     command: |
@@ -45,6 +41,3 @@ environments:
         schedule: "*/15 * * * *"
         command: drush cron
         service: cli
-    routes:
-        - varnish:
-            - "drupal-example.amazee.io"
