@@ -8,3 +8,4 @@ COPY . /app
 # Define where the Drupal Root is located
 ENV WEBROOT=web
 ENV test=test
+ENV MICHAEL=TEST1
