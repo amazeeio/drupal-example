@@ -104,7 +104,6 @@ services:
     image: amazeeio/solr:6.6-drupal
     labels:
       lagoon.type: solr
-    << : *default-user # uses the defined user from top
     ports:
       - "8983" # exposes the port 8983 with a random local port, find it with `docker-compose port solr 8983`
     environment:
