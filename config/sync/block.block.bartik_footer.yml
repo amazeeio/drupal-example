@@ -13,7 +13,7 @@ _core:
 id: bartik_footer
 theme: bartik
 region: footer_fifth
-weight: -6
+weight: -5
 provider: null
 plugin: 'system_menu_block:footer'
 settings:
@@ -23,4 +23,5 @@ settings:
   label_display: '0'
   level: 1
   depth: 0
+  expand_all_items: false
 visibility: {  }
