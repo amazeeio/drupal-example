@@ -1782,16 +1782,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "8.7.6",
+            "version": "8.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "39164616332832e1456199d32fc3ed11562f4721"
+                "reference": "881e60062ea86a8f6809a298f09f56afd20b3cf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/39164616332832e1456199d32fc3ed11562f4721",
-                "reference": "39164616332832e1456199d32fc3ed11562f4721",
+                "url": "https://api.github.com/repos/drupal/core/zipball/881e60062ea86a8f6809a298f09f56afd20b3cf3",
+                "reference": "881e60062ea86a8f6809a298f09f56afd20b3cf3",
                 "shasum": ""
             },
             "require": {
@@ -1829,7 +1829,7 @@
                 "symfony/http-kernel": "~3.4.14",
                 "symfony/polyfill-iconv": "^1.0",
                 "symfony/process": "~3.4.0",
-                "symfony/psr-http-message-bridge": "^1.0",
+                "symfony/psr-http-message-bridge": "^1.1.2",
                 "symfony/routing": "~3.4.0",
                 "symfony/serializer": "~3.4.0",
                 "symfony/translation": "~3.4.0",
@@ -1841,7 +1841,8 @@
                 "zendframework/zend-feed": "^2.4"
             },
             "conflict": {
-                "drush/drush": "<8.1.10"
+                "drush/drush": "<8.1.10",
+                "symfony/dom-crawler": ">=4"
             },
             "replace": {
                 "drupal/action": "self.version",
@@ -2022,7 +2023,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2019-08-07T19:19:20+00:00"
+            "time": "2019-11-06T18:00:38+00:00"
         },
         {
             "name": "drupal/purge",
