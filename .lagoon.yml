@@ -11,18 +11,14 @@ tasks:
 
   post-rollout:
     - run:
-        name: env variables
-        command: env
+        name: IF no Drupal installed and we are not master branch, sync from master brancy
+        command: |
+            if tables=$(drush sqlq 'show tables;') && [ -z "$tables" ] && [[ "$LAGOON_GIT_BRANCH" != "master" ]]; then
+                # no drupal installed, sync DB from master branch
+                drush -y sql-sync @master @self
+            fi
         service: cli
-    # - run:
-    #     name: IF no Drupal installed drush si with no email sending
-    #     command: |
-    #         if ! drush status --fields=bootstrap | grep -q "Successful"; then
-    #             # no drupal installed, we install drupal from scratch
-    #             drush si config_installer -y --account-name=admin --account-pass=admin install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL
-    #         fi
-    #     service: cli
-    #     shell: bash
+        shell: bash
     - run:
         name: drush cim
         command: drush -y cim
@@ -45,6 +41,3 @@ environments:
         schedule: "*/15 * * * *"
         command: drush cron
         service: cli
-    routes:
-        - varnish:
-            - "drupal-example.amazee.io"

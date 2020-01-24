@@ -19,7 +19,7 @@
         "composer/installers": "^1.2",
         "drupal-composer/drupal-scaffold": "^2.2",
         "cweagans/composer-patches": "~1.0",
-        "drupal/core": "~8.0",
+        "drupal/core": "^8.7",
         "drush/drush": "~8.0",
         "drupal/console": "~1.0",
         "drupal/config_installer": "1.x-dev",

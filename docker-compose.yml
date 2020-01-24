@@ -30,7 +30,7 @@ services:
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     build:
       context: .
-      dockerfile: Dockerfile.cli
+      dockerfile: lagoon/cli.dockerfile
     image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     labels:
       # Lagoon Labels
@@ -47,7 +47,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile.nginx
+      dockerfile: lagoon/nginx.dockerfile
       args:
         CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
@@ -67,7 +67,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.php
+      dockerfile: lagoon/php.dockerfile
       args:
         CLI_IMAGE: *lagoon-project
     labels:
@@ -104,7 +104,6 @@ services:
     image: amazeeio/solr:6.6-drupal
     labels:
       lagoon.type: solr
-    << : *default-user # uses the defined user from top
     ports:
       - "8983" # exposes the port 8983 with a random local port, find it with `docker-compose port solr 8983`
     environment:
