@@ -123,7 +123,7 @@ parameters:
   # For more information about debugging cacheable responses, see
   # https://www.drupal.org/developing/api/8/response/cacheable-response-interface
   #
-  # Not recommended in production environments
+  # Not recommended in production environments.
   # @default false
   http.response.debug_cacheability_headers: false
   factory.keyvalue:
