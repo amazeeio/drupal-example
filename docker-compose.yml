@@ -19,7 +19,8 @@ x-environment:
     #LAGOON_ENVIRONMENT_TYPE: production
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     #XDEBUG_ENABLE: "true"
-    # Comment to disable Redis cache and cache failover 
+    # Comment to disable Redis cache and cache failover locally.
+    # For Lagoon deployment, check .lagoon.env file
     ENABLE_REDIS: "true"
 
 x-user:
