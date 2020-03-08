@@ -19,6 +19,8 @@ x-environment:
     #LAGOON_ENVIRONMENT_TYPE: production
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     #XDEBUG_ENABLE: "true"
+    # Comment to disable Redis cache and cache failover 
+    ENABLE_REDIS: "true"
 
 x-user:
   &default-user
@@ -100,14 +102,14 @@ services:
     environment:
       << : *default-environment
 
-  solr:
-    image: amazeeio/solr:6.6-drupal
-    labels:
-      lagoon.type: solr
-    ports:
-      - "8983" # exposes the port 8983 with a random local port, find it with `docker-compose port solr 8983`
-    environment:
-      << : *default-environment
+#  solr:
+#    image: amazeeio/solr:6.6-drupal
+#    labels:
+#      lagoon.type: solr
+#    ports:
+#      - "8983" # exposes the port 8983 with a random local port, find it with `docker-compose port solr 8983`
+#    environment:
+#      << : *default-environment
 
 
   varnish:
