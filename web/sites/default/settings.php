@@ -54,7 +54,7 @@ if (getenv('LAGOON')) {
 }
 
 // Redis configuration.
-if (getenv('LAGOON') && (getenv('ENABLE_REDIS'))) {
+if (getenv('LAGOON')) {
   $redis = new \Redis();
   $redis_host = getenv('REDIS_HOST') ?: 'redis';
   $redis_port = getenv('REDIS_SERVICE_PORT') ?: 6379;
@@ -80,7 +80,7 @@ if (getenv('LAGOON') && (getenv('ENABLE_REDIS'))) {
 
     // Include the default example.services.yml from the module, which will
     // replace all supported backend services (that currently includes the cache tags
-    // checksum service and the lock backends, check the file for the current list)
+    // checksum service and the lock backends, check the file for the current list).
     $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
 
     // Allow the services to work before the Redis module itself is enabled.
