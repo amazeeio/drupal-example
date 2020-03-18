@@ -64,7 +64,7 @@ if (getenv('LAGOON')) {
       throw new \Exception('Drupal installation underway.');
     }
 
-    $redis->connect($redis_host, $redis_port);
+    $redis->connect($redis_host, $redis_port, 1);
     $response = $redis->ping();
 
     if (strpos($response, 'PONG') === FALSE) {
