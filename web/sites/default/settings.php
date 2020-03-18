@@ -59,14 +59,18 @@ if (getenv('LAGOON')) {
   $redis_host = getenv('REDIS_HOST') ?: 'redis';
   $redis_port = getenv('REDIS_SERVICE_PORT') ?: 6379;
   try {
+    # Do not use the cache during installations of Drupal.
     if (drupal_installation_attempted()) {
-      # Do not set the cache during installations of Drupal
       throw new \Exception('Drupal installation underway.');
     }
 
-    $redis->connect($redis_host, $redis_port, 1);
-    $response = $redis->ping();
+    # Use a timeout to ensure that if the Redis pod is down, that Drupal will
+    # continue to function.
+    if ($redis->connect($redis_host, $redis_port, 1) === FALSE) {
+      throw new \Exception('Redis server unreachable.');
+    }
 
+    $response = $redis->ping();
     if (strpos($response, 'PONG') === FALSE) {
       throw new \Exception('Redis could be reached but is not responding correctly.');
     }
