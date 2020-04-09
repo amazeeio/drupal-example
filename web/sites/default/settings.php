@@ -57,7 +57,7 @@ if (getenv('LAGOON')) {
 if (getenv('LAGOON')) {
   $redis = new \Redis();
   $redis_host = getenv('REDIS_HOST') ?: 'redis';
-  $redis_port = getenv('REDIS_PORT') ?: 6379;
+  $redis_port = getenv('REDIS_SERVICE_PORT') ?: 6379;
   try {
     # Do not use the cache during installations of Drupal.
     if (drupal_installation_attempted()) {
