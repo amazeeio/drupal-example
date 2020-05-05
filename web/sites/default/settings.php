@@ -53,16 +53,33 @@ if (getenv('LAGOON')) {
   $config['search_api.server.solr']['name'] = 'Lagoon Solr - Environment: ' . getenv('LAGOON_PROJECT');
 }
 
-### Lagoon Redis connection.
-if (getenv('LAGOON')){
-  $settings['redis.connection']['interface'] = 'PhpRedis';
-  $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
-  $settings['redis.connection']['port'] = 6379;
+// Redis configuration.
+if (getenv('LAGOON')) {
+  $redis = new \Redis();
+  $redis_host = getenv('REDIS_HOST') ?: 'redis';
+  $redis_port = getenv('REDIS_SERVICE_PORT') ?: 6379;
+  try {
+    # Do not use the cache during installations of Drupal.
+    if (drupal_installation_attempted()) {
+      throw new \Exception('Drupal installation underway.');
+    }
 
-  $settings['cache_prefix']['default'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_GIT_SAFE_BRANCH');
+    # Use a timeout to ensure that if the Redis pod is down, that Drupal will
+    # continue to function.
+    if ($redis->connect($redis_host, $redis_port, 1) === FALSE) {
+      throw new \Exception('Redis server unreachable.');
+    }
 
-  # Do not set the cache during installations of Drupal.
-  if (!drupal_installation_attempted() && extension_loaded('redis')) {
+    $response = $redis->ping();
+    if (strpos($response, 'PONG') === FALSE) {
+      throw new \Exception('Redis could be reached but is not responding correctly.');
+    }
+
+    $settings['redis.connection']['interface'] = 'PhpRedis';
+    $settings['redis.connection']['host'] = $redis_host;
+    $settings['redis.connection']['port'] = $redis_port;
+    $settings['cache_prefix']['default'] = getenv('REDIS_CACHE_PREFIX') ?: getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_GIT_SAFE_BRANCH');
+
     $settings['cache']['default'] = 'cache.backend.redis';
 
     // Include the default example.services.yml from the module, which will
@@ -106,6 +123,10 @@ if (getenv('LAGOON')){
         ],
       ],
     ];
+  }
+  catch (\Exception $error) {
+    $settings['container_yamls'][] = 'sites/default/redis-unavailable.services.yml';
+    $settings['cache']['default'] = 'cache.backend.null';
   }
 }
 
