@@ -135,12 +135,11 @@ if (getenv('LAGOON')) {
   $settings['reverse_proxy'] = TRUE;
 }
 
-### Trusted Host Patterns, see https://www.drupal.org/node/2410395 for more information.
-### If your site runs on multiple domains, you need to add these domains here.
-if (getenv('LAGOON_ROUTES')) {
-  $settings['trusted_host_patterns'] = array(
-    '^' . str_replace(['.', 'https://', 'http://', ','], ['\.', '', '', '|'], getenv('LAGOON_ROUTES')) . '$', // escape dots, remove schema, use commas as regex separator
-   );
+### Trusted Host Patterns.
+// Trusted host patterns are not necessary on lagoon as traffic will only
+// be routed to your site via the routes (hosts) defined in .lagoon.yml.
+if (getenv('LAGOON')) {
+  $settings['trusted_host_patterns'][] = '.*';
 }
 
 ### Temp directory.
