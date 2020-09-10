@@ -1,6 +1,6 @@
 docker-compose-yaml: docker-compose.yml
 
-project: drupal-example
+project: drupal-example-xantrix
 
 tasks:
 #   pre-rollout:
