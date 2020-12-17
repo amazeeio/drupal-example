@@ -36,11 +36,11 @@ production_routes:
   active:
     routes:
       - nginx:
-        - active.drupal-example-test1-controller.test1.amazee.io
+        - active.controller.test1.amazee.io
   standby:
     routes:
       - nginx:
-        - standby.drupal-example-test1-controller.test1.amazee.io
+        - standby.controller.test1.amazee.io
 
 environments:
   master:
