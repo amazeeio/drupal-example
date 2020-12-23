@@ -32,7 +32,15 @@ tasks:
         command: drush -y cr
         service: cli
 
-
+production_routes:
+  active:
+    routes:
+      - nginx:
+        - active.controller.test1.amazee.io
+  standby:
+    routes:
+      - nginx:
+        - standby.controller.test1.amazee.io
 
 environments:
   master:
