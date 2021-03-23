@@ -20,6 +20,10 @@ tasks:
         service: cli
         shell: bash
     - run:
+        name: drush cr
+        command: drush cr
+        service: cli    
+    - run:
         name: drush cim
         command: drush -y cim
         service: cli
