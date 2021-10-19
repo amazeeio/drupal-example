@@ -93,7 +93,7 @@ services:
       << : *default-environment
 
   redis:
-    image: testlagoon/redis:multiarch
+    image: testlagoon/redis-5:multiarch
     labels:
       lagoon.type: redis
     << : *default-user # uses the defined user from top
