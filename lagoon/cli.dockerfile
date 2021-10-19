@@ -1,4 +1,4 @@
-FROM uselagoon/php-7.4-cli-drupal:21.9.0
+FROM testlagoon/php-7.4-cli-drupal:multiarch
 
 RUN echo $(php -m | grep intl) || true \
     && cat /etc/os-release \
