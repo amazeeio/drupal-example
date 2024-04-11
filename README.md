@@ -1,3 +1,7 @@
+# Archived
+
+Maintained examples can be found at https://github.com/lagoon-examples.
+
 # Composer template for Drupal projects hosted on amazee.io
 
 This project template should provide a kickstart for managing your site
